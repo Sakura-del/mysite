@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web大作业</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+    <meta name='author ' content='计算机1802 毛郁龙'>
+    <meta name='description' content='Web大作业 登录窗口'>
+
+    <style>
+        body {
+            background-image: url(https://s1.ax1x.com/2020/10/26/BKEn8s.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            color: rgb(255, 255, 255);
+            font-family: 'Microsoft Yahei Light';
+        }
+
+        #main_container {
+            width: 60%;
+            border-radius: 50px;
+            padding: 2rem;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20vh;
+
+            background-color: rgba(0, 0, 0, 0.1)
+        }
+
+        #page_header {
+            width: 4em;
+            margin: 0 auto;
+            margin-bottom: 25px;
+        }
+
+        #name_password_container {
+            width: 15.5em;
+            padding-right: 2em;
+            margin: 0 auto;
+        }
+
+        .row {
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .row_header {
+            width: 5rem;
+
+            display: inline-block;
+
+            text-align: right;
+        }
+
+        .input {
+            height: 1.2rem;
+            width: 10rem;
+            border: 0px;
+            border-radius: 5px;
+
+            outline: none;
+
+            display: inline-block;
+
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5)
+        }
+
+        #button_row {
+            width: 9em;
+            margin: 0 auto;
+
+            display: block;
+        }
+
+        .button {
+            width: 4rem;
+            height: 1.5rem;
+            border: 0px;
+            border-radius: 5px;
+
+            outline: medium;
+
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5)
+        }
+
+        .button:hover {
+            background-color: rgba(0, 0, 0, 0.3)
+        }
+
+        .button:active {
+            background-color: rgba(0, 0, 0, 0.2)
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id='main_container'>
+        <div id='page_header'>用户登录</div>
+
+        <div id=name_password_container>
+            <div class='user_name_row row'>
+                <span class='row_header'>用户名：</span><input class='input' id='user_id_input'>
+            </div>
+            <br>
+            <div class='password_row row'>
+                <span class='row_header'>密码：</span><input class='input' id='password_input'>
+            </div>
+        </div>
+
+        <div class='row' id='button_row'>
+            <input class='button' id='register_button' type='button' value='注册' onclick=On_register_button_click()>
+            <input class='button' id='confirm_button' type='button' value='登录' onclick=On_confirm_button_click()>
+        </div>
+    </div>
+
+</body>
+
+<!-- jQuery -->
+<script src="../vendors/jquery/dist/jquery.min.js"></script>
+
+
+
+<script>
+    function On_register_button_click() {
+        window.location.href = 'register.html'
+    }
+
+    function On_confirm_button_click() {
+        user_id_str = document.getElementById('user_id_input').value
+        if (user_id_str.length == 0) {
+            alert('请输入用户名')
+            return
+        }
+        if (!/^\d+$/.test(user_id_str)) {
+            alert('用户名只能为数字')
+            return
+        }
+
+        password_str = document.getElementById('password_input').value
+        if (password_str.length == 0) {
+            alert('请先输入密码')
+            return
+        }
+        if (password_str.length < 6) {
+            alert('密码不能小于6位')
+            return
+        }
+
+
+        $.ajax({
+                url: "/mgr/views",
+                type: "get",
+                data: {
+                    "action":'sign_in',
+                    "user_name": user_id_str,
+                    "password": password_str
+                },
+                success: function (result) {
+                    console.log(result)
+                    if (result == 'succeed')
+                        window.location.href = 'panel_user_info.html?id=' + user_id_str
+                    else
+                        alert('用户名或密码错误')
+                }
+            });
+    }
+</script>
+
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../images/favicon.ico" type="image/ico" />
+
+    <title>Web大作业</title>
+
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+
+
+
+    <link href="../css/base.css" rel="stylesheet">
+
+    <style>
+        #user_info_block .row {
+            padding-left: 10%;
+            margin-bottom: 1em;
+        }
+
+        #user_info_block .row_header {
+            width: 4em;
+
+            text-align: right;
+        }
+
+        #user_info_block .text_input {
+            width: 80%;
+            border: 2px;
+            border-color: rgb(206, 206, 206);
+            border-style: solid;
+            border-radius: 5px;
+
+            outline: none;
+        }
+
+        #user_info_block .date_input {
+            width: 80%;
+            border: 2px;
+            border-color: rgb(206, 206, 206);
+            border-style: solid;
+            border-radius: 5px;
+
+            outline: none;
+        }
+
+        #user_info_block #user_info_button {
+            width: 5em;
+            height: 2em;
+            border: 1px;
+            border-radius: 10px;
+            margin: 0 auto;
+
+            outline: none;
+
+            color: white;
+            background-color: rgb(88, 209, 189);
+
+            display: block;
+        }
+
+        #user_info_block #user_info_button:hover {
+            background: rgb(78, 199, 179);
+        }
+
+        #user_info_block #user_info_button:active {
+            background: rgb(88, 209, 189);
+        }
+
+        #user_manage_block #search_container {
+            padding-right: 1%;
+
+            display: block;
+        }
+
+        #user_manage_block #search_name_input {
+            height: 2em;
+            border: 2px;
+            border-color: rgb(206, 206, 206);
+            border-style: solid;
+            border-radius: 10px;
+            margin-right: 1em;
+
+            outline: none;
+
+            float: right;
+        }
+
+        #user_manage_block #search_button {
+            width: 5em;
+            height: 2em;
+            border: 1px;
+            border-radius: 10px;
+            margin: 0 auto;
+
+            outline: none;
+
+            color: white;
+            background-color: rgb(88, 209, 189);
+
+            display: block;
+
+            float: right;
+        }
+
+        #user_manage_block #search_button:hover {
+            background: rgb(78, 199, 179);
+        }
+
+        #user_manage_block #search_button:active {
+            background: rgb(88, 209, 189);
+        }
+
+        #user_manage_block #info_table {
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+
+            text-align: center;
+        }
+
+        #user_manage_block #info_table th {
+            font-size: 25px;
+
+            background-color: rgb(183, 225, 217);
+        }
+
+        #user_manage_block #info_table tr:nth-child(odd) {
+            background-color: rgb(203, 245, 237);
+        }
+
+        #user_manage_block #info_table td {
+            font-size: 20px;
+        }
+
+        #user_manage_block #info_table td:not(:last-child) {
+            border: 0px;
+            border-right: 2px;
+            border-style: solid;
+            border-color: rgb(203, 245, 237);
+        }
+
+        #user_manage_block #info_table .edit_button {
+            width: 3em;
+            height: 2em;
+            border: 1px;
+            border-radius: 10px;
+            margin: 5px;
+
+            outline: none;
+
+            color: white;
+            background-color: rgb(88, 209, 189);
+        }
+
+        #user_manage_block #info_table .edit_button:hover {
+            background: rgb(78, 199, 179);
+        }
+
+        #user_manage_block #info_table .edit_button:active {
+            background: rgb(68, 189, 169);
+        }
+
+        #user_manage_block #info_table .delete_button {
+            width: 3em;
+            height: 2em;
+            border: 1px;
+            border-radius: 10px;
+            margin: 5px;
+
+            outline: none;
+
+            color: white;
+            background-color: rgb(214, 53, 53);
+        }
+
+        #user_manage_block #info_table .delete_button:hover {
+            background: rgb(204, 53, 53);
+        }
+
+        #user_manage_block #info_table .delete_button:active {
+            background: rgb(194, 43, 43);
+        }
+
+        #user_manage_block #table_status_container #previous_page_button,
+        #user_manage_block #table_status_container #next_page_button {
+            width: 1.5em;
+            height: 1em;
+            border: 0;
+            padding: 0;
+            margin: 0;
+
+            outline: none;
+
+            color: rgb(150, 150, 150);
+            background-color: rgb(255, 255, 255);
+        }
+
+        #user_manage_block #table_status_container #previous_page_button:hover,
+        #user_manage_block #table_status_container #next_page_button:hover {
+            color: rgb(170, 170, 170);
+        }
+
+        #user_manage_block #table_status_container #previous_page_button:active,
+        #user_manage_block #table_status_container #next_page_button:active {
+            color: rgb(190, 190, 190);
+        }
+
+        #user_manage_block #table_status_container #jump_page_input {
+            width: 3em;
+            height: 2em;
+            border: 2px;
+            border-style: solid;
+            border-color: rgb(206, 206, 206);
+            border-radius: 10px;
+
+            outline: none;
+        }
+
+        #user_manage_block #table_status_container #jump_button {
+            width: 3em;
+            height: 2em;
+            border: 1px;
+            border-style: solid;
+            border-radius: 10px;
+            margin: 5px;
+
+            outline: none;
+
+            color: rgb(255, 255, 255);
+            background-color: rgb(88, 209, 189);
+        }
+
+        #user_manage_block #table_status_container #jump_button:hover {
+            background: rgb(78, 199, 179);
+        }
+
+        #user_manage_block #table_status_container #jump_button:active {
+            background: rgb(88, 209, 189);
+        }
+
+        #new_article_block #input_title {
+            height: 2em;
+            width: 100%;
+            border: 1px;
+            border-radius: 20px;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            outline: medium;
+            color: rgb(90, 115, 145);
+            background-color: rgb(226, 226, 226);
+            font-size: 20px;
+            display: block;
+        }
+
+        #new_article_block #input_detail {
+            height: 7em;
+            width: 100%;
+            border: 1px;
+            border-radius: 20px;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            outline: medium;
+            resize: none;
+            color: rgb(90, 115, 145);
+            background-color: rgb(226, 226, 226);
+            font-size: 20px;
+            display: block;
+        }
+
+        #new_article_block #publish_btn {
+            height: 40px;
+            padding: 0 20px;
+            border: 0px;
+            border-radius: 20px;
+            float: right;
+            outline: medium;
+            color: rgb(255, 255, 255);
+            background: rgb(68, 189, 169);
+        }
+
+        #new_article_block #publish_btn:hover {
+            background: rgb(78, 199, 179);
+        }
+
+        #new_article_block #publish_btn:active {
+            background: rgb(88, 209, 189);
+        }
+    </style>
+
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view" id='left_col'>
+
+                    <div class="clearfix"></div>
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <ul class="nav side-menu">
+                                <li><a><span class="tag_1st">登录与注册</span>
+                                        <span class="down_arrow fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="index.html">登录</a></li>
+                                        <li><a href="register.html">注册</a></li>
+                                    </ul>
+                                </li>
+
+                                <li><a><span class="tag_1st">功能模块</span>
+                                        <span class="down_arrow fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="#" onClick="Jump_panel_user_info()">个人中心</a></li>
+                                        <li><a href="#" onClick="Jump_panel_user_mange()">用户管理</a></li>
+                                        <li><a href="#" onClick="Jump_panel_article_manage()">文章管理</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav" id="top_nav">
+                <div class="nav_menu" id='nav_menu'>
+                    <div class="fa fa-bars" id='menu_toggle'></div>
+                    <span class="user-profile" id="project_slogan">Web大作业</span>
+                </div>
+            </div>
+            <!-- /top navigation -->
+
+            <!-- page content -->
+            <div class="right_col" role="main">
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12" id="user_info_block">
+                        <div class="x_panel tile">
+                            <div class="x_title">
+                                <h2>个人资料</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                            aria-expanded="false">
+                                            <i class="fa fa-wrench"></i>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Settings 1</a>
+                                            <a class="dropdown-item" href="#">Settings 2</a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="close-link">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="x_content">
+                                <div class='row'>
+                                    <span class='row_header'>姓名：</span>
+                                    <input class='text_input' id='user_name_input' type='text'>
+                                </div>
+
+                                <div class='row'>
+                                    <span class='row_header'>邮箱：</span>
+                                    <input class='text_input' id='email_input' type='text'>
+                                </div>
+
+                                <div class='row'>
+                                    <span class='row_header'>生日：</span>
+                                    <input class='date_input' id='birth_date_input' type='date'>
+                                </div>
+
+                                <div class='row'>
+                                    <span class='row_header'>余额：</span>
+                                    <input class='text_input' id='amount_input' type='text'>
+                                </div>
+
+                                <button id='user_info_button'>确认修改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12" id="user_manage_block">
+                        <div class="x_panel tile">
+                            <div class="x_title">
+                                <h2>用户信息管理</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                            aria-expanded="false">
+                                            <i class="fa fa-wrench"></i>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Settings 1</a>
+                                            <a class="dropdown-item" href="#">Settings 2</a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="close-link">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="x_content">
+                                <div class='row' id='search_container'>
+                                    <button id='search_button'>搜索</button>
+                                    <input id='search_name_input' type='text' placeholder='请输入标题搜索文章'>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <table id='info_table'>
+                                    <tr id='table_head_tr'>
+                                        <th>序号</th>
+                                        <th>文章标题</th>
+                                        <th>文章内容</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>111</td>
+                                        <td>111</td>
+                                        <td><button class='edit_button'>编辑</button>
+                                            <button class='delete_button'>删除</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>111</td>
+                                        <td>111</td>
+                                        <td><button class='edit_button'>编辑</button>
+                                            <button class='delete_button'>删除</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>111</td>
+                                        <td>111</td>
+                                        <td><button class='edit_button'>编辑</button>
+                                            <button class='delete_button'>删除</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>111</td>
+                                        <td>111</td>
+                                        <td><button class='edit_button'>编辑</button>
+                                            <button class='delete_button'>删除</button>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div id="table_status_container">
+                                    <button class='fa fa-chevron-left' id='previous_page_button'></button>
+                                    <button class='fa fa-chevron-right' id='next_page_button'></button>
+                                    <span>跳转到第</span>
+                                    <input id='jump_page_input' type='text'>
+                                    <span>页</span>
+                                    <button id='jump_button'>确定</button>
+                                    <span>共10条信息</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12" id="new_article_block">
+                        <div class="x_panel tile">
+                            <div class="x_title">
+                                <h2>发布新文章</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                            aria-expanded="false">
+                                            <i class="fa fa-wrench"></i>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Settings 1</a>
+                                            <a class="dropdown-item" href="#">Settings 2</a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="close-link">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="x_content">
+                                <div style='font-size:18px'>文章标题</div>
+                                <input id="input_title">
+                                <div style='font-size:18px'>文章详情</div>
+                                <textarea id="input_detail"></textarea>
+                                <button id="publish_btn">发布</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /page content -->
+
+            <!-- footer content -->
+            <footer id='footer'>
+                <div class="pull-right" id='powered_by'>
+                    计算机1802 毛郁龙
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+</body>
+
+<!-- jQuery -->
+<script src="../vendors/jquery/dist/jquery.min.js"></script>
+<!-- 先引入jquery -->
+<script src="../js/jquery.js"></script>
+<!-- Bootstrap -->
+<script src="../vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- FastClick -->
+<script src="../vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="../vendors/nprogress/nprogress.js"></script>
+<!-- Chart.js -->
+<script src="../vendors/Chart.js/dist/Chart.min.js"></script>
+<!-- gauge.js -->
+<script src="../vendors/gauge.js/dist/gauge.min.js"></script>
+<!-- bootstrap-progressbar -->
+<script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<!-- iCheck -->
+<script src="../vendors/iCheck/icheck.min.js"></script>
+<!-- Skycons -->
+<script src="../vendors/skycons/skycons.js"></script>
+<!-- Flot -->
+<script src="../vendors/Flot/jquery.flot.js"></script>
+<script src="../vendors/Flot/jquery.flot.pie.js"></script>
+<script src="../vendors/Flot/jquery.flot.time.js"></script>
+<script src="../vendors/Flot/jquery.flot.stack.js"></script>
+<script src="../vendors/Flot/jquery.flot.resize.js"></script>
+<!-- Flot plugins -->
+<script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+<script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+<script src="../vendors/flot.curvedlines/curvedLines.js"></script>
+<!-- DateJS -->
+<script src="../vendors/DateJS/build/date.js"></script>
+<!-- JQVMap -->
+<script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
+<script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+<script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+<!-- bootstrap-daterangepicker -->
+<script src="../vendors/moment/min/moment.min.js"></script>
+<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- Custom Theme Scripts -->
+<script src="../build/js/custom.min.js"></script>
+<script src="../js/flexible.js"></script>
+
+
+
+<script>
+    user_id = window.location.search.substr(1).match(/id=(\d+)/)[1]
+
+    function Jump_panel_user_info() {
+        window.location.href = 'panel_user_info.html?id=' + user_id
+    }
+
+    function Jump_panel_user_mange() {
+        window.location.href = 'panel_user_mange.html?id=' + user_id
+    }
+
+    function Jump_panel_article_manage() {
+        window.location.href = 'panel_article_manage.html?id=' + user_id
+    }
+
+
+</script>
+
+</html>

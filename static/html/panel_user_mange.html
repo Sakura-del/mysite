@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../images/favicon.ico" type="image/ico" />
+
+    <title>Web大作业</title>
+
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+
+
+
+    <link href="../css/base.css" rel="stylesheet">
+
+    <style>
+        #user_manage_block #search_container {
+            padding-right: 1%;
+
+            display: block;
+        }
+
+        #user_manage_block #search_name_input {
+            height: 2em;
+            border: 2px;
+            border-color: rgb(206, 206, 206);
+            border-style: solid;
+            border-radius: 10px;
+            margin-right: 1em;
+
+            outline: none;
+
+            float: right;
+        }
+
+        #user_manage_block #search_button {
+            width: 5em;
+            height: 2em;
+            border: 1px;
+            border-radius: 10px;
+            margin: 0 auto;
+
+            outline: none;
+
+            color: white;
+            background-color: rgb(88, 209, 189);
+
+            display: block;
+
+            float: right;
+        }
+
+        #user_manage_block #search_button:hover {
+            background: rgb(78, 199, 179);
+        }
+
+        #user_manage_block #search_button:active {
+            background: rgb(88, 209, 189);
+        }
+
+        #user_manage_block #user_info_table {
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+
+            text-align: center;
+        }
+
+        #user_manage_block #user_info_table th {
+            font-size: 25px;
+
+            background-color: rgb(183, 225, 217);
+        }
+
+        #user_manage_block #user_info_table tr:nth-child(even) {
+            background-color: rgb(203, 245, 237);
+        }
+
+        #user_manage_block #user_info_table td {
+            font-size: 20px;
+        }
+
+        #user_manage_block #user_info_table td:not(:last-child) {
+            border: 0px;
+            border-right: 2px;
+            border-style: solid;
+            border-color: rgb(203, 245, 237);
+        }
+
+        #user_manage_block #user_info_table .edit_button {
+            width: 3em;
+            height: 2em;
+            border: 1px;
+            border-radius: 10px;
+            margin: 5px;
+
+            outline: none;
+
+            color: white;
+            background-color: rgb(88, 209, 189);
+        }
+
+        #user_manage_block #user_info_table .edit_button:hover {
+            background: rgb(78, 199, 179);
+        }
+
+        #user_manage_block #user_info_table .edit_button:active {
+            background: rgb(68, 189, 169);
+        }
+
+        #user_manage_block #user_info_table .delete_button {
+            width: 3em;
+            height: 2em;
+            border: 1px;
+            border-radius: 10px;
+            margin: 5px;
+
+            outline: none;
+
+            color: white;
+            background-color: rgb(214, 53, 53);
+        }
+
+        #user_manage_block #user_info_table .delete_button:hover {
+            background: rgb(204, 53, 53);
+        }
+
+        #user_manage_block #user_info_table .delete_button:active {
+            background: rgb(194, 43, 43);
+        }
+
+        #user_manage_block #user_info_table .text_input {
+            width: 8em;
+            border: 2px;
+            border-color: rgb(206, 206, 206);
+            border-style: solid;
+            border-radius: 5px;
+
+            outline: none;
+        }
+
+        #user_manage_block #user_info_table .date_input {
+            width: 8em;
+            border: 2px;
+            border-color: rgb(206, 206, 206);
+            border-style: solid;
+            border-radius: 5px;
+
+            outline: none;
+        }
+
+        #user_manage_block #table_status_container #previous_page_button,
+        #user_manage_block #table_status_container #next_page_button {
+            width: 1.5em;
+            height: 1em;
+            border: 0;
+            padding: 0;
+            margin: 0;
+
+            outline: none;
+
+            color: rgb(150, 150, 150);
+            background-color: rgb(255, 255, 255);
+        }
+
+        #user_manage_block #table_status_container #previous_page_button:hover,
+        #user_manage_block #table_status_container #next_page_button:hover {
+            color: rgb(170, 170, 170);
+        }
+
+        #user_manage_block #table_status_container #previous_page_button:active,
+        #user_manage_block #table_status_container #next_page_button:active {
+            color: rgb(190, 190, 190);
+        }
+
+        #user_manage_block #table_status_container #jump_page_input {
+            width: 3em;
+            height: 2em;
+            border: 2px;
+            border-style: solid;
+            border-color: rgb(206, 206, 206);
+            border-radius: 10px;
+
+            outline: none;
+        }
+
+        #user_manage_block #table_status_container #jump_button {
+            width: 3em;
+            height: 2em;
+            border: 1px;
+            border-style: solid;
+            border-radius: 10px;
+            margin: 5px;
+
+            outline: none;
+
+            color: rgb(255, 255, 255);
+            background-color: rgb(88, 209, 189);
+        }
+
+        #user_manage_block #table_status_container #jump_button:hover {
+            background: rgb(78, 199, 179);
+        }
+
+        #user_manage_block #table_status_container #jump_button:active {
+            background: rgb(88, 209, 189);
+        }
+    </style>
+
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view" id='left_col'>
+
+                    <div class="clearfix"></div>
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <ul class="nav side-menu">
+                                <li><a><span class="tag_1st">登录与注册</span>
+                                        <span class="down_arrow fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="index.html">登录</a></li>
+                                        <li><a href="register.html">注册</a></li>
+                                    </ul>
+                                </li>
+
+                                <li><a><span class="tag_1st">功能模块</span>
+                                        <span class="down_arrow fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="#" onClick="Jump_panel_user_info()">个人中心</a></li>
+                                        <li><a href="#" onClick="Jump_panel_user_mange()">用户管理</a></li>
+                                        <li><a href="#" onClick="Jump_panel_article_manage()">文章管理</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav" id="top_nav">
+                <div class="nav_menu" id='nav_menu'>
+                    <div class="fa fa-bars" id='menu_toggle'></div>
+                    <span class="user-profile" id="project_slogan">Web大作业</span>
+                </div>
+            </div>
+            <!-- /top navigation -->
+
+            <!-- page content -->
+            <div class="right_col" role="main">
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12" id="user_manage_block">
+                        <div class="x_panel tile">
+                            <div class="x_title">
+                                <h2>用户信息管理</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                            aria-expanded="false">
+                                            <i class="fa fa-wrench"></i>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Settings 1</a>
+                                            <a class="dropdown-item" href="#">Settings 2</a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="close-link">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="x_content">
+                                <div class='row' id='search_container'>
+                                    <button id='search_button'>搜索</button>
+                                    <input id='search_name_input' type='text' placeholder='请输入姓名搜索用户'>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <table id='user_info_table'>
+                                    <thead>
+                                        <tr id='table_head_tr'>
+                                            <th>序号</th>
+                                            <th>姓名</th>
+                                            <th>邮箱</th>
+                                            <th>余额</th>
+                                            <th>生日</th>
+                                            <th>密码</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>张三</td>
+                                            <td>123456789@qq.com</td>
+                                            <td>114514</td>
+                                            <td>1453.9.3</td>
+                                            <td>1991.12.27</td>
+                                            <td><button class='edit_button' id='1_edit_button' value='1'
+                                                    onclick='On_edit_button_click(this.value)'>编辑</button>
+                                                <button class='delete_button'>删除</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>张三</td>
+                                            <td>123456789@qq.com</td>
+                                            <td>114514</td>
+                                            <td>1453.9.3</td>
+                                            <td>1991.12.27</td>
+                                            <td><button class='edit_button' id='2_edit_button' value='2'
+                                                    onclick='On_edit_button_click(this.value)'>编辑</button>
+                                                <button class='delete_button'>删除</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>张三</td>
+                                            <td>123456789@qq.com</td>
+                                            <td>114514</td>
+                                            <td>1453.9.3</td>
+                                            <td>1991.12.27</td>
+                                            <td><button class='edit_button' id='3_edit_button' value='3'
+                                                    onclick='On_edit_button_click(this.value)'>编辑</button>
+                                                <button class='delete_button'>删除</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>张三</td>
+                                            <td>123456789@qq.com</td>
+                                            <td>114514</td>
+                                            <td>1453.9.3</td>
+                                            <td>1991.12.27</td>
+                                            <td><button class='edit_button' id='4_edit_button' value='4'
+                                                    onclick='On_edit_button_click(this.value)'>编辑</button>
+                                                <button class='delete_button'>删除</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div id="table_status_container">
+                                    <button class='fa fa-chevron-left' id='previous_page_button'></button>
+                                    <button class='fa fa-chevron-right' id='next_page_button'></button>
+                                    <span>跳转到第</span>
+                                    <input id='jump_page_input' type='text'>
+                                    <span>页</span>
+                                    <button id='jump_button'>确定</button>
+                                    <span>共10条信息</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /page content -->
+
+            <!-- footer content -->
+            <footer id='footer'>
+                <div class="pull-right" id='powered_by'>
+                    计算机1802 毛郁龙
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+</body>
+
+<!-- jQuery -->
+<script src="../vendors/jquery/dist/jquery.min.js"></script>
+<!-- 先引入jquery -->
+<script src="../js/jquery.js"></script>
+<!-- Bootstrap -->
+<script src="../vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- FastClick -->
+<script src="../vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="../vendors/nprogress/nprogress.js"></script>
+<!-- Chart.js -->
+<script src="../vendors/Chart.js/dist/Chart.min.js"></script>
+<!-- gauge.js -->
+<script src="../vendors/gauge.js/dist/gauge.min.js"></script>
+<!-- bootstrap-progressbar -->
+<script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<!-- iCheck -->
+<script src="../vendors/iCheck/icheck.min.js"></script>
+<!-- Skycons -->
+<script src="../vendors/skycons/skycons.js"></script>
+<!-- Flot -->
+<script src="../vendors/Flot/jquery.flot.js"></script>
+<script src="../vendors/Flot/jquery.flot.pie.js"></script>
+<script src="../vendors/Flot/jquery.flot.time.js"></script>
+<script src="../vendors/Flot/jquery.flot.stack.js"></script>
+<script src="../vendors/Flot/jquery.flot.resize.js"></script>
+<!-- Flot plugins -->
+<script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+<script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+<script src="../vendors/flot.curvedlines/curvedLines.js"></script>
+<!-- DateJS -->
+<script src="../vendors/DateJS/build/date.js"></script>
+<!-- JQVMap -->
+<script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
+<script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+<script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+<!-- bootstrap-daterangepicker -->
+<script src="../vendors/moment/min/moment.min.js"></script>
+<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- Custom Theme Scripts -->
+<script src="../build/js/custom.min.js"></script>
+<script src="../js/flexible.js"></script>
+
+
+
+<script>
+    user_id = window.location.search.substr(1).match(/id=(\d+)/)[1]
+
+    function Jump_panel_user_info() {
+        window.location.href = 'panel_user_info.html?id=' + user_id
+    }
+
+    function Jump_panel_user_mange() {
+        window.location.href = 'panel_user_mange.html?id=' + user_id
+    }
+
+    function Jump_panel_article_manage() {
+        window.location.href = 'panel_article_manage.html?id=' + user_id
+    }
+
+
+    (function Table_inti() {
+        $.ajax({
+            url: "function/user_table",
+            type: "get",
+            success: function (result) {
+                var user_info_table_tbody = document.getElementById('user_info_table').children[1]
+
+                for (var i = 0; i < result.length; i++) {
+                    var user_info = result[i]
+
+                    var id_td = document.createElement('td')
+                    id_td.innerHTML = user_info['id']
+
+                    var name_td = document.createElement('td')
+                    name_td.innerHTML = user_info['name']
+
+                    var email_td = document.createElement('td')
+                    email_td.innerHTML = user_info['email']
+
+                    var amount_td = document.createElement('td')
+                    amount_td.innerHTML = user_info['amount']
+
+                    var birth_date_td = document.createElement('td')
+                    birth_date_td.innerHTML = user_info['birth_date']
+
+                    var password_td = document.createElement('td')
+                    password_td.innerHTML = user_info['password']
+
+                    var edit_button = document.createElement('button')
+                    edit_button.className = 'edit_button'
+                    edit_button.id = user_info['id'] + '_edit_button'
+                    edit_button.value = user_info['id']
+                    edit_button.onclick = function () { On_edit_button_click(this.value) }
+
+                    var delete_button = document.createElement('button')
+                    delete_button.className = 'delete_button'
+                    delete_button.id = user_info['id'] + '_delete_button'
+                    delete_button.value = user_info['id']
+                    delete_button.onclick = function () { On_delete_button_click(this.value) }
+
+                    var button_td = document.createElement('td')
+                    button_td.appendChild(edit_button)
+                    button_td.appendChild(delete_button)
+
+                    var one_row_tr = document.createElement('tr')
+                    one_row_tr.appendChild(id_td)
+                    one_row_tr.appendChild(name_td)
+                    one_row_tr.appendChild(email_td)
+                    one_row_tr.appendChild(amount_td)
+                    one_row_tr.appendChild(birth_date_td)
+                    one_row_tr.appendChild(password_td)
+                    one_row_tr.appendChild(button_td)
+
+                    user_info_table_tbody.appendChild(one_row_tr)
+                }
+            }
+        })
+    })
+
+    function On_edit_button_click(user_id) {
+        var edit_button = document.getElementById(user_id + '_edit_button')
+        var editing_row_index = edit_button.parentNode.parentNode.rowIndex
+        var editing_row = document.getElementById('user_info_table').children[1].children[editing_row_index - 1]
+
+        if (edit_button.innerHTML == '编辑') {
+            edit_button.innerHTML = '确定'
+
+            for (var i = 1; i < editing_row.children.length - 1; i++) {
+                var one_td = editing_row.children[i]
+                var current_value = one_td.innerHTML
+
+                if (i != 4) {
+                    var temp_input = document.createElement('input')
+                    temp_input.className = 'text_input'
+                    temp_input.type = 'text'
+                    temp_input.value = current_value
+                }
+                else {
+                    var temp_input = document.createElement('input')
+                    temp_input.className = 'date_input'
+                    temp_input.type = 'date'
+                }
+
+                one_td.innerHTML = ''
+                one_td.appendChild(temp_input)
+            }
+        }
+        else {
+            var user_id = editing_row.children[0].innerHTML
+
+            var user_name = editing_row.children[1].children[0].value
+            if (user_name.length == 0) {
+                alert('请输入姓名')
+                return
+            }
+            if (!/^[\u4E00-\u9FA5a-zA-Z]{1,10}$/.test(user_name)) {
+                alert('姓名只能包括中英文，不超过10个字符')
+                return
+            }
+
+            var email = editing_row.children[2].children[0].value
+            if (email.length == 0) {
+                alert('请输入邮箱')
+                return
+            }
+            if (!/^.+@.+\.com$/.test(email)) {
+                alert('邮箱格式不正确')
+                return
+            }
+
+            var amount = editing_row.children[3].children[0].value
+            if (amount.length == 0) {
+                alert('请输入存款金额')
+                return
+            }
+            var amount_pattern = /(^\d*$)|(^\d*\.\d{1,2}$)/
+            if (!amount_pattern.test(amount)) {
+                alert('非法的存款金额')
+                return
+            }
+
+            var birth_date = editing_row.children[4].children[0].value
+            if (birth_date.length == 0) {
+                alert('请指定出生日期')
+                return
+            }
+
+            var password = editing_row.children[5].children[0].value
+            if (password.length == 0) {
+                alert('请设置密码')
+                return
+            }
+            if (! /^.{6,100}$/.test(password)) {
+                alert('密码不少于6位')
+                return
+            }
+
+            $.ajax({
+                url: "function/change_user_info",
+                type: "get",
+                data: {
+                    "user_id": user_id,
+                    "user_name": user_name,
+                    "email": email,
+                    "amount": amount,
+                    "birth_date": birth_date,
+                    "password": password
+                },
+                success: function (result) {
+                    if (result == 'succeed') {
+                        alert('修改成功')
+                        window.location.href = 'panel_user_mange.html?id=' + user_id
+                    }
+                    else
+                        alert('由于未知原因修改失败')
+                }
+            })
+        }
+
+
+    }
+
+    function On_delete_button_click(user_id) {
+        $.ajax({
+            url: "function/delete_user",
+            type: "get",
+            data: {
+                "user_id": user_id,
+            },
+            success: function (result) {
+                if (result == 'succeed') {
+                    alert('删除用户成功')
+                    window.location.href = 'panel_user_mange.html?id=' + user_id
+                }
+                else
+                    alert('由于未知原因删除用户失败')
+            }
+        })
+    }
+
+</script>
+
+</html>

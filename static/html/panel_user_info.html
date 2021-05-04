@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../images/favicon.ico" type="image/ico" />
+
+    <title>Web大作业</title>
+
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+
+
+
+    <link href="../css/base.css" rel="stylesheet">
+
+    <style>
+        #user_info_block .row {
+            padding-left: 10%;
+            margin-bottom: 1em;
+        }
+
+        #user_info_block .row_header {
+            width: 4em;
+
+            text-align: right;
+        }
+
+        #user_info_block .text_input {
+            border: 2px;
+            border-color: rgb(206, 206, 206);
+            border-style: solid;
+            border-radius: 5px;
+
+            outline: none;
+        }
+
+        #user_info_block .date_input {
+            border: 2px;
+            border-color: rgb(206, 206, 206);
+            border-style: solid;
+            border-radius: 5px;
+
+            outline: none;
+        }
+
+        #user_info_block #change_info_button {
+            width: 5em;
+            height: 2em;
+            border: 1px;
+            border-radius: 10px;
+            margin: 0 auto;
+
+            outline: none;
+
+            color: white;
+            background-color: rgb(88, 209, 189);
+
+            display: block;
+        }
+
+        #user_info_block #change_info_button:hover {
+            background: rgb(78, 199, 179);
+        }
+
+        #user_info_block #change_info_button:active {
+            background: rgb(88, 209, 189);
+        }
+
+        #change_password_block .row {
+            padding-left: 10%;
+            margin-bottom: 1em;
+        }
+
+        #change_password_block .row_header {
+            width: 5em;
+
+            text-align: right;
+        }
+
+        #change_password_block .text_input {
+            border: 2px;
+            border-color: rgb(206, 206, 206);
+            border-style: solid;
+            border-radius: 5px;
+
+            outline: none;
+        }
+
+        #change_password_block #change_password_button {
+            width: 5em;
+            height: 2em;
+            border: 1px;
+            border-radius: 10px;
+            margin: 0 auto;
+
+            outline: none;
+
+            color: white;
+            background-color: rgb(88, 209, 189);
+
+            display: block;
+        }
+
+        #change_password_block #change_password_button:hover {
+            background: rgb(78, 199, 179);
+        }
+
+        #change_password_block #change_password_button:active {
+            background: rgb(88, 209, 189);
+        }
+    </style>
+
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view" id='left_col'>
+
+                    <div class="clearfix"></div>
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <ul class="nav side-menu">
+                                <li><a><span class="tag_1st">登录与注册</span>
+                                        <span class="down_arrow fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="index.html">登录</a></li>
+                                        <li><a href="register.html">注册</a></li>
+                                    </ul>
+                                </li>
+
+                                <li><a><span class="tag_1st">功能模块</span>
+                                        <span class="down_arrow fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="#" onClick="Jump_panel_user_info()">个人中心</a></li>
+                                        <li><a href="#" onClick="Jump_panel_user_mange()">用户管理</a></li>
+                                        <li><a href="#" onClick="Jump_panel_article_manage()">文章管理</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav" id="top_nav">
+                <div class="nav_menu" id='nav_menu'>
+                    <div class="fa fa-bars" id='menu_toggle'></div>
+                    <span class="user-profile" id="project_slogan">Web大作业</span>
+                </div>
+            </div>
+            <!-- /top navigation -->
+
+            <!-- page content -->
+            <div class="right_col" role="main">
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-6" id="user_info_block">
+                        <div class="x_panel tile">
+                            <div class="x_title">
+                                <h2>个人资料</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                            aria-expanded="false">
+                                            <i class="fa fa-wrench"></i>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Settings 1</a>
+                                            <a class="dropdown-item" href="#">Settings 2</a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="close-link">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="x_content">
+                                <div class='row'>
+                                    <span class='row_header'>ID：</span>
+                                    <input class='text_input' id='user_id_input' type='text'>
+                                </div>
+
+                                <div class='row'>
+                                    <span class='row_header'>姓名：</span>
+                                    <input class='text_input' id='user_name_input' type='text'>
+                                </div>
+
+                                <div class='row'>
+                                    <span class='row_header'>邮箱：</span>
+                                    <input class='text_input' id='email_input' type='text'>
+                                </div>
+
+                                <div class='row'>
+                                    <span class='row_header'>余额：</span>
+                                    <input class='text_input' id='amount_input' type='text'>
+                                </div>
+
+                                <div class='row'>
+                                    <span class='row_header'>生日：</span>
+                                    <input class='date_input' id='birth_date_input' type='date'>
+                                </div>
+
+                                <button id='change_info_button' onclick='On_change_info_button_click()'>确认修改</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6" id="change_password_block">
+                        <div class="x_panel tile">
+                            <div class="x_title">
+                                <h2>修改密码</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                            aria-expanded="false">
+                                            <i class="fa fa-wrench"></i>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Settings 1</a>
+                                            <a class="dropdown-item" href="#">Settings 2</a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="close-link">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="x_content">
+                                <div class='row'>
+                                    <span class='row_header'>原密码：</span>
+                                    <input class='text_input' id='old_password_input' type='text'>
+                                </div>
+
+                                <div class='row'>
+                                    <span class='row_header'>新密码：</span>
+                                    <input class='text_input' id='new_password_input' type='text'>
+                                </div>
+
+                                <div class='row'>
+                                    <span class='row_header'>确认密码：</span>
+                                    <input class='text_input' id='confirm_password_input' type='text'>
+                                </div>
+
+                                <button id='change_password_button'>确认修改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /page content -->
+
+            <!-- footer content -->
+            <footer id='footer'>
+                <div class="pull-right" id='powered_by'>
+                    计算机1802 毛郁龙
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+</body>
+
+<!-- jQuery -->
+<script src="../vendors/jquery/dist/jquery.min.js"></script>
+<!-- 先引入jquery -->
+<script src="../js/jquery.js"></script>
+<!-- Bootstrap -->
+<script src="../vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- FastClick -->
+<script src="../vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="../vendors/nprogress/nprogress.js"></script>
+<!-- Chart.js -->
+<script src="../vendors/Chart.js/dist/Chart.min.js"></script>
+<!-- gauge.js -->
+<script src="../vendors/gauge.js/dist/gauge.min.js"></script>
+<!-- bootstrap-progressbar -->
+<script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<!-- iCheck -->
+<script src="../vendors/iCheck/icheck.min.js"></script>
+<!-- Skycons -->
+<script src="../vendors/skycons/skycons.js"></script>
+<!-- Flot -->
+<script src="../vendors/Flot/jquery.flot.js"></script>
+<script src="../vendors/Flot/jquery.flot.pie.js"></script>
+<script src="../vendors/Flot/jquery.flot.time.js"></script>
+<script src="../vendors/Flot/jquery.flot.stack.js"></script>
+<script src="../vendors/Flot/jquery.flot.resize.js"></script>
+<!-- Flot plugins -->
+<script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+<script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+<script src="../vendors/flot.curvedlines/curvedLines.js"></script>
+<!-- DateJS -->
+<script src="../vendors/DateJS/build/date.js"></script>
+<!-- JQVMap -->
+<script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
+<script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+<script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+<!-- bootstrap-daterangepicker -->
+<script src="../vendors/moment/min/moment.min.js"></script>
+<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- Custom Theme Scripts -->
+<script src="../build/js/custom.min.js"></script>
+<script src="../js/flexible.js"></script>
+
+
+
+<script>
+    user_id = window.location.search.substr(1).match(/id=(\d+)/)[1]
+
+    function Jump_panel_user_info() {
+        window.location.href = 'panel_user_info.html?id=' + user_id
+    }
+
+    function Jump_panel_user_mange() {
+        window.location.href = 'panel_user_mange.html?id=' + user_id
+    }
+
+    function Jump_panel_article_manage() {
+        window.location.href = 'panel_article_manage.html?id=' + user_id
+    }
+
+    (function Info_inti(){
+        document.getElementById('user_id_input').value = user_id
+
+        $.ajax({
+            url: "function/get_info",
+            type: "get",
+            data: {
+                "user_id":user_id,
+            },
+            success: function (result) {
+                document.getElementById('user_name_input').value = result['user_name']
+                document.getElementById('email_input').value = result['email']
+                document.getElementById('amount_input').value = result['amount']
+                document.getElementById('birth_date_input').value = result['birth_date']
+            }
+        })
+    })()
+
+
+    function On_change_info_button_click(){
+        var user_name = document.getElementById('user_name_input').value
+        if (user_name.length == 0) {
+            alert('请输入姓名')
+            return
+        }
+        if (!/^[\u4E00-\u9FA5a-zA-Z]{1,10}$/.test(user_name)) {
+            alert('姓名只能包括中英文，不超过10个字符')
+            return
+        }
+
+        var email = document.getElementById('email_input').value
+        if (email.length == 0) {
+            alert('请输入邮箱')
+            return
+        }
+        if (!/^.+@.+\.com$/.test(email)) {
+            alert('邮箱格式不正确')
+            return
+        }
+
+        var amount = document.getElementById('amount_input').value
+        if (amount.length == 0) {
+            alert('请输入存款金额')
+            return
+        }
+        var amount_pattern = /(^\d*$)|(^\d*\.\d{1,2}$)/
+        if (!amount_pattern.test(amount)) {
+            alert('非法的存款金额')
+            return
+        }
+
+        var birth_date = document.getElementById('birth_date_input').value
+        if (birth_date.length == 0) {
+            alert('请指定出生日期')
+            return
+        }
+
+        $.ajax({
+            url: "function/change_info",
+            type: "get",
+            data: {
+                "user_id":user_id,
+                "user_name": user_name,
+                "email":email,
+                "amount": amount,
+                "birth_date": birth_date
+            },
+            success: function (result) {
+                if (result == 'succeed') {
+                    alert('修改信息成功')
+                    window.location.href = 'panel_user_info.html?id=' + user_id
+                }
+                else
+                    alert('由于未知原因修改信息失败')
+            }
+        })
+    }
+
+    function On_change_password_button_click(){
+        var old_password = document.getElementById('old_password_input').value
+        if (old_password.length == 0) {
+            alert('请输入旧密码')
+            return
+        }
+        if (! /^.{6,100}$/.test(old_password)) {
+            alert('密码不少于6位')
+            return
+        }
+
+        var new_password = document.getElementById('new_password_input').value
+        if (new_password.length == 0) {
+            alert('请设置密码')
+            return
+        }
+        if (! /^.{6,100}$/.test(new_password)) {
+            alert('密码不少于6位')
+            return
+        }
+
+        var confirm_password = document.getElementById('confirm_password_input').value
+        if (confirm_password.length == 0) {
+            alert('请确认密码')
+            return
+        }
+        if (new_password != confirm_password) {
+            alert('两次输入的密码不一致')
+            return
+        }
+
+        $.ajax({
+            url: "function/change_password",
+            type: "get",
+            data: {
+                "user_id":user_id,
+                "old_password":old_password,
+                "new_password":new_password
+            },
+            success: function (result) {
+                if (result == 'succeed') {
+                    alert('修改密码成功')
+                    window.location.href = 'panel_user_info.html?id=' + user_id
+                }
+                else
+                    alert('原密码错误')
+            }
+        })
+    }
+
+</script>
+
+</html>

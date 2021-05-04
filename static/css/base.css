@@ -1,0 +1,75 @@
+/* 字体 */
+body{
+    font-family:'Microsoft Yahei Light';
+}
+
+
+/* 侧栏相关 */
+#left_col {
+    width: 100%;
+}
+
+#left_col .side-menu a {
+    padding-left: 20px;
+    font-size: 18px;
+}
+
+#left_col .child_menu a {
+    font-size: 15px;
+}
+
+#left_col .down_arrow {
+    padding-left: 50px;
+    float: none;
+    font-size: 12px !important;
+}
+
+
+/* 顶栏相关 */
+#top_nav #nav_menu {
+    position: relative;
+}
+
+#top_nav #menu_toggle {
+    padding: 0.25em 0;
+    padding-left: 0.4em;
+    font-size: 30px;
+}
+
+#top_nav #project_slogan {
+    height: 1em;
+    margin: auto 0;
+
+    right: 30px;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    vertical-align: middle;
+
+    line-height: 1em;
+    font-family: '华文行楷';
+    font-size: 20px;
+}
+
+
+/* 低栏相关 */
+#footer {
+    position: relative;
+}
+
+#footer #powered_by {
+    height: 1.25em;
+    margin: auto 0;
+
+    right: 2%;
+
+    font-size: 16px;
+    line-height: 1.25em;
+}
+
+
+/* 高度塌陷 */
+.clear_fix {
+    display: table;
+    clear: both;
+}

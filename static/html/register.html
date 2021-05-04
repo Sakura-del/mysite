@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web大作业</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+    <meta name='author ' content='计算机1802 毛郁龙'>
+    <meta name='description' content='Web大作业 注册窗口'>
+
+    <style>
+        body {
+            background-image: url(https://s1.ax1x.com/2020/10/26/BKEn8s.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            color: rgb(255, 255, 255);
+            font-family: 'Microsoft Yahei Light';
+        }
+
+        #main_container {
+            width: 60%;
+            border-radius: 50px;
+            padding: 50px;
+            padding-left: 30%;
+            margin: 0 auto;
+
+            background-color: rgba(0, 0, 0, 0.1)
+        }
+
+        #page_type {
+            width: 5em;
+            margin: 0 auto;
+            margin-bottom: 25px;
+            margin-top: 25px;
+            font-size: 50px;
+        }
+
+        #page_header,
+        .row_container {
+            margin-bottom: 25px;
+        }
+
+        .row_header {
+            width: 7em;
+
+            display: inline-block;
+
+            text-align: right;
+        }
+
+        .text_input {
+            width: 10em;
+            height: 20px;
+            border: 0px;
+            border-radius: 5px;
+
+            outline: medium;
+
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5)
+        }
+
+        #birth_date_input {
+            height: 20px;
+            border: 0px;
+            border-radius: 5px;
+
+            outline: medium;
+
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5)
+        }
+
+        #button_row {
+            padding-left: 10%;
+            margin: 0 auto;
+
+            display: block;
+        }
+
+        .button {
+            width: 80px;
+            height: 30px;
+            border: 0px;
+            border-radius: 5px;
+
+            outline: medium;
+
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+
+            font-size: 20px;
+        }
+
+        .button:hover {
+            background-color: rgba(0, 0, 0, 0.3)
+        }
+
+        .button:active {
+            background-color: rgba(0, 0, 0, 0.2)
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id='page_type'>新用户注册</div>
+
+    <div id='main_container'>
+        <div id='page_header'>用户个人资料</div>
+
+        <div class='row_container' id='user_id_row'>
+            <span class='row_header'>编号：</span>
+            <input class='text_input' id='user_id_input' type='text' readonly>
+            <span>（编号不能自行修改）</span>
+        </div>
+
+        <div class='row_container' id='user_name_row'>
+            <span class='row_header'>姓名：</span>
+            <input class='text_input' id='user_name_input' type='text'>
+        </div>
+
+        <div class='row_container' id='password_row'>
+            <span class='row_header'>密码：</span>
+            <input class='text_input' id='password_input' type='password'>
+        </div>
+
+        <div class='row_container' id='confirm_password_row'>
+            <span class='row_header'>确认密码：</span>
+            <input class='text_input' id='confirm_password_input' type='password'>
+        </div>
+
+        <div class='row_container' id='email_row'>
+            <span class='row_header'>邮箱：</span>
+            <input class='text_input' id='email_input' type='text'>
+        </div>
+
+        <div class='row_container' id='amount_row'>
+            <span class='row_header'>存款金额：</span>
+            <input class='text_input' id='amount_input' type='text'>
+        </div>
+
+        <div class='row_container' id='birth_date_row'>
+            <span class='row_header'>生日：</span>
+            <input class='date_input' id='birth_date_input' type='date'>
+        </div>
+
+        <div class='row_container' id='button_row'>
+            <input class='button' id='confirm_button' type='button' value='确定' onclick=On_confirm_button_click()>
+            <input class='button' id='cancel_button' type='button' value='取消' onclick=On_cancel_button_click()>
+        </div>
+    </div>
+
+</body>
+
+<script src="js/jquery-3.6.0.js"></script>
+
+<script>
+    //获取下一个可用的用户编号
+    (function Get_user_id() {
+        $.ajax({
+            url: "function/maxID",
+            type: "get",
+            success: function (result) {
+                document.getElementById('user_id_input').value = result
+            }
+        })
+    })()
+
+
+    function On_confirm_button_click() {
+        var user_id = document.getElementById('user_id_input').value
+
+        var user_name = document.getElementById('user_name_input').value
+        if (user_name.length == 0) {
+            alert('请输入姓名')
+            return
+        }
+        if (!/^[\u4E00-\u9FA5a-zA-Z]{1,10}$/.test(user_name)) {
+            alert('姓名只能包括中英文，不超过10个字符')
+            return
+        }
+
+        var password = document.getElementById('password_input').value
+        if (password.length == 0) {
+            alert('请设置密码')
+            return
+        }
+        if (! /^.{6,100}$/.test(password)) {
+            alert('密码不少于6位')
+            return
+        }
+
+        var confirm_password = document.getElementById('confirm_password_input').value
+        if (confirm_password.length == 0) {
+            alert('请确认密码')
+            return
+        }
+        if (password != confirm_password) {
+            alert('两次输入的密码不一致')
+            return
+        }
+
+        var email = document.getElementById('email_input').value
+        if (email.length == 0) {
+            alert('请输入邮箱')
+            return
+        }
+        if (!/^.+@.+\.com$/.test(email)) {
+            alert('邮箱格式不正确')
+            return
+        }
+
+        var amount = document.getElementById('amount_input').value
+        if (amount.length == 0) {
+            alert('请输入存款金额')
+            return
+        }
+        var amount_pattern = /(^\d*$)|(^\d*\.\d{1,2}$)/
+        if (!amount_pattern.test(amount)) {
+            alert('非法的存款金额')
+            return
+        }
+
+        var birth_date = document.getElementById('birth_date_input').value
+        if (birth_date.length == 0) {
+            alert('请指定出生日期')
+            return
+        }
+
+        $.ajax({
+            url: "function/register",
+            type: "get",
+            data: {
+                "user_name": user_name,
+                "password": password,
+                "email":email,
+                "amount": amount,
+                "birth_date": birth_date
+            },
+            success: function (result) {
+                if (result == 'succeed') {
+                    alert('注册成功')
+                    window.location.href = 'panel_user_info.html?id=' + document.getElementById('user_id_input').value
+                }
+                else
+                    alert('由于未知原因注册失败')
+            }
+        })
+    }
+
+    function On_cancel_button_clicked() {
+        window.location.href = 'index.html'
+    }
+</script>
+
+</html>
