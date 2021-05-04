@@ -159,7 +159,7 @@
         }
 
         #user_manage_block #user_info_table .date_input {
-            width: 8em;
+            width: 10em;
             border: 2px;
             border-color: rgb(206, 206, 206);
             border-style: solid;
@@ -168,7 +168,7 @@
             outline: none;
         }
 
-        #user_manage_block #table_status_container #previous_page_button,
+        /* #user_manage_block #table_status_container #previous_page_button,
         #user_manage_block #table_status_container #next_page_button {
             width: 1.5em;
             height: 1em;
@@ -223,7 +223,7 @@
 
         #user_manage_block #table_status_container #jump_button:active {
             background: rgb(88, 209, 189);
-        }
+        } */
     </style>
 
 </head>
@@ -309,7 +309,7 @@
 
                             <div class="x_content">
                                 <div class='row' id='search_container'>
-                                    <button id='search_button'>搜索</button>
+                                    <button id='search_button' onclick='On_search_button_click()'>搜索</button>
                                     <input id='search_name_input' type='text' placeholder='请输入姓名搜索用户'>
                                     <div class="clearfix"></div>
                                 </div>
@@ -322,63 +322,15 @@
                                             <th>邮箱</th>
                                             <th>余额</th>
                                             <th>生日</th>
-                                            <th>密码</th>
+                                            <!-- <th>密码</th> -->
                                             <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>张三</td>
-                                            <td>123456789@qq.com</td>
-                                            <td>114514</td>
-                                            <td>1453.9.3</td>
-                                            <td>1991.12.27</td>
-                                            <td><button class='edit_button' id='1_edit_button' value='1'
-                                                    onclick='On_edit_button_click(this.value)'>编辑</button>
-                                                <button class='delete_button'>删除</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>张三</td>
-                                            <td>123456789@qq.com</td>
-                                            <td>114514</td>
-                                            <td>1453.9.3</td>
-                                            <td>1991.12.27</td>
-                                            <td><button class='edit_button' id='2_edit_button' value='2'
-                                                    onclick='On_edit_button_click(this.value)'>编辑</button>
-                                                <button class='delete_button'>删除</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>张三</td>
-                                            <td>123456789@qq.com</td>
-                                            <td>114514</td>
-                                            <td>1453.9.3</td>
-                                            <td>1991.12.27</td>
-                                            <td><button class='edit_button' id='3_edit_button' value='3'
-                                                    onclick='On_edit_button_click(this.value)'>编辑</button>
-                                                <button class='delete_button'>删除</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>张三</td>
-                                            <td>123456789@qq.com</td>
-                                            <td>114514</td>
-                                            <td>1453.9.3</td>
-                                            <td>1991.12.27</td>
-                                            <td><button class='edit_button' id='4_edit_button' value='4'
-                                                    onclick='On_edit_button_click(this.value)'>编辑</button>
-                                                <button class='delete_button'>删除</button>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
 
-                                <div id="table_status_container">
+                                <!-- <div id="table_status_container">
                                     <button class='fa fa-chevron-left' id='previous_page_button'></button>
                                     <button class='fa fa-chevron-right' id='next_page_button'></button>
                                     <span>跳转到第</span>
@@ -386,7 +338,7 @@
                                     <span>页</span>
                                     <button id='jump_button'>确定</button>
                                     <span>共10条信息</span>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -454,59 +406,62 @@
 
 
 <script>
-    user_id = window.location.search.substr(1).match(/id=(\d+)/)[1]
+    operating_user_id = window.location.search.substr(1).match(/id=(\d+)/)[1]
 
     function Jump_panel_user_info() {
-        window.location.href = 'panel_user_info.html?id=' + user_id
+        window.location.href = 'panel_user_info.html?id=' + operating_user_id
     }
 
     function Jump_panel_user_mange() {
-        window.location.href = 'panel_user_mange.html?id=' + user_id
+        window.location.href = 'panel_user_mange.html?id=' + operating_user_id
     }
 
     function Jump_panel_article_manage() {
-        window.location.href = 'panel_article_manage.html?id=' + user_id
+        window.location.href = 'panel_article_manage.html?id=' + operating_user_id
     }
 
 
     (function Table_inti() {
         $.ajax({
-            url: "function/user_table",
+            url: "/mgr/manager",
             type: "get",
+            data: { 'action': 'list_users' },
             success: function (result) {
                 var user_info_table_tbody = document.getElementById('user_info_table').children[1]
 
-                for (var i = 0; i < result.length; i++) {
-                    var user_info = result[i]
+                for (var i = 0; i < result['retlist'].length; i++) {
+                    var user_info = result['retlist'][i]
 
                     var id_td = document.createElement('td')
-                    id_td.innerHTML = user_info['id']
+                    id_td.innerHTML = user_info['userId']
 
                     var name_td = document.createElement('td')
-                    name_td.innerHTML = user_info['name']
+                    name_td.innerHTML = user_info['userName']
 
                     var email_td = document.createElement('td')
-                    email_td.innerHTML = user_info['email']
+                    email_td.innerHTML = user_info['mailbox']
 
                     var amount_td = document.createElement('td')
-                    amount_td.innerHTML = user_info['amount']
+                    amount_td.innerHTML = user_info['balance']
 
                     var birth_date_td = document.createElement('td')
-                    birth_date_td.innerHTML = user_info['birth_date']
+                    birth_date_td.innerHTML = user_info['birth']
 
-                    var password_td = document.createElement('td')
-                    password_td.innerHTML = user_info['password']
+                    // var password_td = document.createElement('td')
+                    // password_td.innerHTML =' user_info[password]'
 
                     var edit_button = document.createElement('button')
+                    edit_button.innerHTML = '编辑'
                     edit_button.className = 'edit_button'
-                    edit_button.id = user_info['id'] + '_edit_button'
-                    edit_button.value = user_info['id']
+                    edit_button.id = user_info['userId'] + '_edit_button'
+                    edit_button.value = user_info['userId']
                     edit_button.onclick = function () { On_edit_button_click(this.value) }
 
                     var delete_button = document.createElement('button')
+                    delete_button.innerHTML = '删除'
                     delete_button.className = 'delete_button'
-                    delete_button.id = user_info['id'] + '_delete_button'
-                    delete_button.value = user_info['id']
+                    delete_button.id = user_info['userId'] + '_delete_button'
+                    delete_button.value = user_info['userId']
                     delete_button.onclick = function () { On_delete_button_click(this.value) }
 
                     var button_td = document.createElement('td')
@@ -519,14 +474,84 @@
                     one_row_tr.appendChild(email_td)
                     one_row_tr.appendChild(amount_td)
                     one_row_tr.appendChild(birth_date_td)
-                    one_row_tr.appendChild(password_td)
+                    // one_row_tr.appendChild(password_td)
                     one_row_tr.appendChild(button_td)
 
                     user_info_table_tbody.appendChild(one_row_tr)
                 }
             }
         })
-    })
+    })()
+
+
+    function On_search_button_click() {
+        var user_name = document.getElementById('search_name_input').value
+
+        $.ajax({
+            url: "/mgr/manager",
+            type: "get",
+            data: {
+                'action': 'query_user_by_name',
+                'user_name': user_name
+            },
+            success: function (result) {
+                console.log(result)
+                var user_info_table_tbody = document.getElementById('user_info_table').children[1]
+                user_info_table_tbody.innerHTML = ''
+
+                for (var i = 0; i < result['user'].length; i++) {
+                    var user_info = result['user'][i]
+
+                    var id_td = document.createElement('td')
+                    id_td.innerHTML = user_info['userId']
+
+                    var name_td = document.createElement('td')
+                    name_td.innerHTML = user_info['userName']
+
+                    var email_td = document.createElement('td')
+                    email_td.innerHTML = user_info['mailbox']
+
+                    var amount_td = document.createElement('td')
+                    amount_td.innerHTML = user_info['balance']
+
+                    var birth_date_td = document.createElement('td')
+                    birth_date_td.innerHTML = user_info['birth']
+
+                    // var password_td = document.createElement('td')
+                    // password_td.innerHTML =' user_info[password]'
+
+                    var edit_button = document.createElement('button')
+                    edit_button.innerHTML = '编辑'
+                    edit_button.className = 'edit_button'
+                    edit_button.id = user_info['userId'] + '_edit_button'
+                    edit_button.value = user_info['userId']
+                    edit_button.onclick = function () { On_edit_button_click(this.value) }
+
+                    var delete_button = document.createElement('button')
+                    delete_button.innerHTML = '删除'
+                    delete_button.className = 'delete_button'
+                    delete_button.id = user_info['userId'] + '_delete_button'
+                    delete_button.value = user_info['userId']
+                    delete_button.onclick = function () { On_delete_button_click(this.value) }
+
+                    var button_td = document.createElement('td')
+                    button_td.appendChild(edit_button)
+                    button_td.appendChild(delete_button)
+
+                    var one_row_tr = document.createElement('tr')
+                    one_row_tr.appendChild(id_td)
+                    one_row_tr.appendChild(name_td)
+                    one_row_tr.appendChild(email_td)
+                    one_row_tr.appendChild(amount_td)
+                    one_row_tr.appendChild(birth_date_td)
+                    // one_row_tr.appendChild(password_td)
+                    one_row_tr.appendChild(button_td)
+
+                    user_info_table_tbody.appendChild(one_row_tr)
+                }
+            }
+        })
+    }
 
     function On_edit_button_click(user_id) {
         var edit_button = document.getElementById(user_id + '_edit_button')
@@ -550,6 +575,7 @@
                     var temp_input = document.createElement('input')
                     temp_input.className = 'date_input'
                     temp_input.type = 'date'
+                    temp_input.value = current_value
                 }
 
                 one_td.innerHTML = ''
@@ -596,31 +622,32 @@
                 return
             }
 
-            var password = editing_row.children[5].children[0].value
-            if (password.length == 0) {
-                alert('请设置密码')
-                return
-            }
-            if (! /^.{6,100}$/.test(password)) {
-                alert('密码不少于6位')
-                return
-            }
+            // var password = editing_row.children[5].children[0].value
+            // if (password.length == 0) {
+            //     alert('请设置密码')
+            //     return
+            // }
+            // if (! /^.{6,100}$/.test(password)) {
+            //     alert('密码不少于6位')
+            //     return
+            // }
 
             $.ajax({
-                url: "function/change_user_info",
+                url: "/mgr/views",
                 type: "get",
                 data: {
-                    "user_id": user_id,
+                    "action": 'change_info',
+                    "id": user_id,
                     "user_name": user_name,
-                    "email": email,
-                    "amount": amount,
-                    "birth_date": birth_date,
-                    "password": password
+                    "mailbox": email,
+                    "balance": amount,
+                    "birth": birth_date
+                    // "password": password
                 },
                 success: function (result) {
-                    if (result == 'succeed') {
+                    if (result['msg'] == '修改信息成功！') {
                         alert('修改成功')
-                        window.location.href = 'panel_user_mange.html?id=' + user_id
+                        window.location.href = 'panel_user_mange.html?id=' + operating_user_id
                     }
                     else
                         alert('由于未知原因修改失败')
@@ -632,16 +659,23 @@
     }
 
     function On_delete_button_click(user_id) {
+        var edit_button = document.getElementById(user_id + '_edit_button')
+        var editing_row_index = edit_button.parentNode.parentNode.rowIndex
+        var editing_row = document.getElementById('user_info_table').children[1].children[editing_row_index - 1]
+        var user_id = editing_row.children[0].innerHTML
+
         $.ajax({
-            url: "function/delete_user",
+            url: "/mgr/manager",
             type: "get",
             data: {
-                "user_id": user_id,
+                "action": 'delete_user',
+                "id": user_id,
             },
             success: function (result) {
-                if (result == 'succeed') {
+                console.log(result)
+                if (result['msg'] == '') {
                     alert('删除用户成功')
-                    window.location.href = 'panel_user_mange.html?id=' + user_id
+                    window.location.href = 'panel_user_mange.html?id=' + operating_user_id
                 }
                 else
                     alert('由于未知原因删除用户失败')

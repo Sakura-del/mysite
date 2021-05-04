@@ -181,30 +181,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>张三</td>
-                                            <td>114514</td>
-                                            <td><button class='article_detail_button'>进入文章管理</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>张三</td>
-                                            <td>114514</td>
-                                            <td><button class='article_detail_button'>进入文章管理</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>张三</td>
-                                            <td>114514</td>
-                                            <td><button class='article_detail_button'>进入文章管理</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>张三</td>
-                                            <td>114514</td>
-                                            <td><button class='article_detail_button'>进入文章管理</button></td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -315,54 +291,58 @@
 <script src="../js/echarts.min.js"></script>
 
 <script>
-    user_id = window.location.search.substr(1).match(/id=(\d+)/)[1]
+    operating_user_id = window.location.search.substr(1).match(/id=(\d+)/)[1]
 
     function Jump_panel_user_info() {
-        window.location.href = 'panel_user_info.html?id=' + user_id
+        window.location.href = 'panel_user_info.html?id=' + operating_user_id
     }
 
     function Jump_panel_user_mange() {
-        window.location.href = 'panel_user_mange.html?id=' + user_id
+        window.location.href = 'panel_user_mange.html?id=' + operating_user_id
     }
 
     function Jump_panel_article_manage() {
-        window.location.href = 'panel_article_manage.html?id=' + user_id
+        window.location.href = 'panel_article_manage.html?id=' + operating_user_id
     }
 
 
 
     (function Page_inti() {
         $.ajax({
-            url: "function/get_article_list",
+            url: "/mgr/articles",
             type: "get",
             data: {
-                "user_id": user_id,
+                "action":'list_articles',
+                'pagenum':1,
+                'pagesize':100
             },
             success: function (result) {
+                console.log(result)
                 var user_name_list = []
                 var article_count_list = []
 
                 var article_info_table_tbody = document.getElementById('article_info_table').children[1]
 
-                for (var i = 0; i < result.length; i++) {
-                    var user_info = result[i]
+                for (var i = 0; i < result['retlist'].length; i++) {
+                    var user_info = result['retlist'][i]
 
-                    user_name_list.push(user_info['name'])
-                    article_count_list.push(user_info['count'])
+                    user_name_list.push(user_info['userName'])
+                    article_count_list.push(user_info['articles_count'])
 
                     var id_td = document.createElement('td')
-                    id_td.innerHTML = user_info['id']
+                    id_td.innerHTML = user_info['userId']
 
                     var name_td = document.createElement('td')
-                    name_td.innerHTML = user_info['name']
+                    name_td.innerHTML = user_info['userName']
 
                     var count_td = document.createElement('td')
-                    count_td.innerHTML = user_info['count']
+                    count_td.innerHTML = user_info['articles_count']
 
                     var detail_button = document.createElement('button')
-                    detail_button.className = 'detail_button'
-                    detail_button.id = user_info['id'] + '_detail_button'
-                    detail_button.value = user_info['id']
+                    detail_button.innerHTML = '进入文章管理'
+                    detail_button.className = 'article_detail_button'
+                    detail_button.id = user_info['userId'] + '_detail_button'
+                    detail_button.value = user_info['userId']
                     detail_button.onclick = function () { On_detail_button_click(this.value) }
 
                     var button_td = document.createElement('td')
@@ -454,7 +434,7 @@
     })()
 
     function On_detail_button_click(user_id){
-        window.location.href = 'panel_user_article_manage.html?id=' + user_id
+        window.location.href = 'panel_user_article_manage.html?id=' + operating_user_id + '&check_id=' + user_id
     }
 
 </script>

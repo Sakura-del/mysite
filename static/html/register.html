@@ -153,16 +153,18 @@
 
 </body>
 
-<script src="js/jquery-3.6.0.js"></script>
+<!-- jQuery -->
+<script src="../vendors/jquery/dist/jquery.min.js"></script>
 
 <script>
     //获取下一个可用的用户编号
     (function Get_user_id() {
         $.ajax({
-            url: "function/maxID",
+            url: "/mgr/views",
             type: "get",
+            data: { 'action': 'get_last_id' },
             success: function (result) {
-                document.getElementById('user_id_input').value = result
+                document.getElementById('user_id_input').value = result['id']
             }
         })
     })()
@@ -229,22 +231,24 @@
         }
 
         $.ajax({
-            url: "function/register",
+            url: "/mgr/views",
             type: "get",
             data: {
+                "action": "register",
                 "user_name": user_name,
                 "password": password,
-                "email":email,
-                "amount": amount,
-                "birth_date": birth_date
+                "mailbox": email,
+                "balance": amount,
+                "birth": birth_date
             },
             success: function (result) {
-                if (result == 'succeed') {
+                console.log(result)
+                if (result['msg'] == '创建用户成功！') {
                     alert('注册成功')
                     window.location.href = 'panel_user_info.html?id=' + document.getElementById('user_id_input').value
                 }
-                else
-                    alert('由于未知原因注册失败')
+                else if (result['msg'] == '用户名已存在')
+                    alert('用户名已存在')
             }
         })
     }

@@ -23,24 +23,30 @@ def list_users(request):
 
 # 按用户名查询用户
 def query_user_by_name(request):
-    userName = request['user_name']
+    userName = request.params['user_name']
     try:
-        user =  UserInfo.objects.values().filter(userName=userName)
+        user = UserInfo.objects.get(userName=userName)
     except UserInfo.DoesNotExist:
         return JsonResponse({'ret':1,'msg':'用户名不存在，请重新输入！'})
 
-    return JsonResponse({'ret': 0, 'user': serializers.serialize("json", [user])[1:-1], 'msg': ''})
+    qs = UserInfo.objects.values().filter(userId=user.userId)
+    qs = list(qs)
+
+    return JsonResponse({'ret': 0, 'user': qs, 'msg': ''})
 
 
 # 按ID查询用户
 def query_user_by_id(request):
-    userId = request['id']
+    userId = request.params['id']
     try:
-        user =  UserInfo.objects.values().filter(userId=userId)
+        user =  UserInfo.objects.get(userId=userId)
     except UserInfo.DoesNotExist:
         return JsonResponse({'ret':1,'msg':'用户名不存在，请重新输入！'})
 
-    return JsonResponse({'ret': 0, 'user': serializers.serialize("json", [user])[1:-1], 'msg': ''})
+    qs = UserInfo.objects.values().filter(userId=user.userId)
+    qs = list(qs)
+
+    return JsonResponse({'ret': 0, 'user': qs[0], 'msg': ''})
 
 
 # 修改用户资料
@@ -56,7 +62,10 @@ def change_info(request):
     user.balance = request.params['balance']
     user.save()
 
-    return JsonResponse({'ret': 0, 'user': serializers.serialize("json", [user])[1:-1], 'msg': '修改信息成功！'})
+    qs = UserInfo.objects.values().filter(userId=user.userId)
+    qs = list(qs)
+
+    return JsonResponse({'ret': 0, 'user': qs[0], 'msg': '修改信息成功！'})
 
 
 # 删除用户
@@ -71,10 +80,10 @@ def delete_user(request):
 # 函数字典
 ActionHandler = {
     'list_users':list_users,
-    'query_user_by_name':'query_user_by_name',
-    'query_user_by_id': 'query_user_by_id',
-    'change_info': 'change_info',
-    'delete_user':'delete_user'
+    'query_user_by_name':query_user_by_name,
+    'query_user_by_id': query_user_by_id,
+    'change_info': change_info,
+    'delete_user':delete_user
 }
 
 

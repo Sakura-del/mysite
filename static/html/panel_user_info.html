@@ -45,6 +45,7 @@
         }
 
         #user_info_block .text_input {
+            width: 60%;
             border: 2px;
             border-color: rgb(206, 206, 206);
             border-style: solid;
@@ -54,6 +55,7 @@
         }
 
         #user_info_block .date_input {
+            width: 60%;
             border: 2px;
             border-color: rgb(206, 206, 206);
             border-style: solid;
@@ -97,6 +99,7 @@
         }
 
         #change_password_block .text_input {
+            width: 60%;
             border: 2px;
             border-color: rgb(206, 206, 206);
             border-style: solid;
@@ -275,20 +278,20 @@
                             <div class="x_content">
                                 <div class='row'>
                                     <span class='row_header'>原密码：</span>
-                                    <input class='text_input' id='old_password_input' type='text'>
+                                    <input class='text_input' id='old_password_input' type='password'>
                                 </div>
 
                                 <div class='row'>
                                     <span class='row_header'>新密码：</span>
-                                    <input class='text_input' id='new_password_input' type='text'>
+                                    <input class='text_input' id='new_password_input' type='password'>
                                 </div>
 
                                 <div class='row'>
                                     <span class='row_header'>确认密码：</span>
-                                    <input class='text_input' id='confirm_password_input' type='text'>
+                                    <input class='text_input' id='confirm_password_input' type='password'>
                                 </div>
 
-                                <button id='change_password_button'>确认修改</button>
+                                <button id='change_password_button' onclick='On_change_password_button_click()'>确认修改</button>
                             </div>
                         </div>
                     </div>
@@ -355,37 +358,39 @@
 
 
 <script>
-    user_id = window.location.search.substr(1).match(/id=(\d+)/)[1]
+    operating_user_id = window.location.search.substr(1).match(/id=(\d+)/)[1]
 
     function Jump_panel_user_info() {
-        window.location.href = 'panel_user_info.html?id=' + user_id
+        window.location.href = 'panel_user_info.html?id=' + operating_user_id
     }
 
     function Jump_panel_user_mange() {
-        window.location.href = 'panel_user_mange.html?id=' + user_id
+        window.location.href = 'panel_user_mange.html?id=' + operating_user_id
     }
 
     function Jump_panel_article_manage() {
-        window.location.href = 'panel_article_manage.html?id=' + user_id
+        window.location.href = 'panel_article_manage.html?id=' + operating_user_id
     }
 
     (function Info_inti(){
-        document.getElementById('user_id_input').value = user_id
+        document.getElementById('user_id_input').value = operating_user_id
 
         $.ajax({
-            url: "function/get_info",
+            url: "/mgr/manager",
             type: "get",
-            data: {
-                "user_id":user_id,
+            data:{
+                'action':'query_user_by_id',
+                'id':operating_user_id
             },
             success: function (result) {
-                document.getElementById('user_name_input').value = result['user_name']
-                document.getElementById('email_input').value = result['email']
-                document.getElementById('amount_input').value = result['amount']
-                document.getElementById('birth_date_input').value = result['birth_date']
+                document.getElementById('user_name_input').value = result['user']['userName']
+                document.getElementById('email_input').value = result['user']['mailbox']
+                document.getElementById('amount_input').value = result['user']['balance']
+                document.getElementById('birth_date_input').value = result['user']['birth']
             }
         })
     })()
+
 
 
     function On_change_info_button_click(){
@@ -427,19 +432,20 @@
         }
 
         $.ajax({
-            url: "function/change_info",
+            url: "/mgr/views",
             type: "get",
-            data: {
-                "user_id":user_id,
-                "user_name": user_name,
-                "email":email,
-                "amount": amount,
-                "birth_date": birth_date
+            data:{
+                'action':'change_info',
+                'id':operating_user_id,
+                'user_name':user_name,
+                'mailbox':email,
+                'balance':amount,
+                'birth':birth_date,
             },
             success: function (result) {
-                if (result == 'succeed') {
+                if (result['msg'] == '修改信息成功！') {
                     alert('修改信息成功')
-                    window.location.href = 'panel_user_info.html?id=' + user_id
+                    window.location.href = 'panel_user_info.html?id=' + operating_user_id
                 }
                 else
                     alert('由于未知原因修改信息失败')
@@ -479,20 +485,22 @@
         }
 
         $.ajax({
-            url: "function/change_password",
+            url: "/mgr/views",
             type: "get",
             data: {
-                "user_id":user_id,
+                "action":'change_pwd',
+                "id":operating_user_id,
                 "old_password":old_password,
                 "new_password":new_password
             },
             success: function (result) {
-                if (result == 'succeed') {
-                    alert('修改密码成功')
-                    window.location.href = 'panel_user_info.html?id=' + user_id
+                if (result['msg'] == '密码错误，请重新输入！') {
+                    alert('原密码错误，请重新输入！')
                 }
-                else
-                    alert('原密码错误')
+                else if(result['msg'] == '修改密码成功！'){
+                    alert('修改密码成功')
+                    window.location.href = 'panel_user_info.html?id=' + operating_user_id
+                }
             }
         })
     }

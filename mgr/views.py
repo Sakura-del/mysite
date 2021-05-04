@@ -25,7 +25,39 @@ def sign_in(request):
     if not check_password(password, user.password):
         return JsonResponse({'ret': 1, 'msg': '用户名或密码错误！'})
 
-    return JsonResponse({'ret': 0, 'user': serializers.serialize("json", [user])[1:-1], 'msg': 0})
+    qs = UserInfo.objects.values().filter(userId=user.userId)
+    qs = list(qs)
+
+    return JsonResponse({'ret': 0, 'user': qs[0], 'msg': '登录成功'})
+
+
+# id登录
+def sign_in_by_id(request):
+    userId = request.params['id']
+    password = request.params['password']
+
+    # 检查是否存在该用户
+    try:
+        user = UserInfo.objects.get(userId=userId)
+    except UserInfo.DoesNotExist:
+        return JsonResponse({'ret': 1, 'msg': '用户名或密码错误！'})
+
+    # 检查密码是否正确
+    if not check_password(password, user.password):
+        return JsonResponse({'ret': 1, 'msg': '用户名或密码错误！'})
+
+    qs = UserInfo.objects.values().filter(userId=user.userId)
+    qs = list(qs)
+
+    return JsonResponse({'ret': 0, 'user': qs[0], 'msg': '登录成功'})
+
+
+# 获取最新id
+def get_last_id(request):
+    qs = UserInfo.objects.values('userId').order_by('-userId')
+    qs = list(qs)
+
+    return JsonResponse({'ret':0,'id':qs[0]['userId']+1,'msg':''})
 
 
 # 注册
@@ -53,18 +85,24 @@ def register(request):
 
     birth = datetime.strptime(request.params['birth'], "%Y-%m-%d")
 
-    with transaction.atomic():
-        # 创建用户
-        user = UserInfo.objects.create(
-            userName=userName,
-            password=password,
-            birth=birth,
-            balance=request.params['balance'],
-            mailbox=mailbox,
-            mgr=1
-        )
+    try:
+        with transaction.atomic():
+            # 创建用户
+            user = UserInfo.objects.create(
+                userName=userName,
+                password=password,
+                birth=birth,
+                balance=request.params['balance'],
+                mailbox=mailbox,
+                mgr=1
+            )
+    except:
+        return JsonResponse({'ret': 1, 'msg': '用户名已存在'})
 
-    return JsonResponse({'ret': 0, 'user': serializers.serialize("json", [user])[1:-1], 'msg': '创建成功！'})
+    qs = UserInfo.objects.values().filter(userId=user.userId)
+    qs = list(qs)
+
+    return JsonResponse({'ret': 0, 'user': qs[0], 'msg': '创建用户成功！'})
 
 
 # 修改用户资料
@@ -77,7 +115,10 @@ def change_info(request):
     user.balance = request.params['balance']
     user.save()
 
-    return JsonResponse({'ret': 0, 'user': serializers.serialize("json", [user])[1:-1], 'msg': '修改信息成功！'})
+    qs = UserInfo.objects.values().filter(userId=user.userId)
+    qs = list(qs)
+
+    return JsonResponse({'ret': 0, 'user': qs[0], 'msg': '修改信息成功！'})
 
 
 # 修改密码
@@ -92,8 +133,12 @@ def change_pwd(request):
     new_password = request.params['new_password']
     password = make_password(new_password)
     user.password = password
+    user.save()
 
-    return JsonResponse({'ret': 0, 'user': serializers.serialize("json", [user])[1:-1], 'msg': '修改密码成功！'})
+    qs = UserInfo.objects.values().filter(userId=user.userId)
+    qs = list(qs)
+
+    return JsonResponse({'ret': 0, 'user': qs[0], 'msg': '修改密码成功！'})
 
 
 # 注销
@@ -107,10 +152,12 @@ def logout(request):
 # 函数字典
 ActionHandler = {
     'sign_in': sign_in,
+    'sign_in_by_id':sign_in_by_id,
     'register': register,
     'change_info': change_info,
     'change_pwd':change_pwd,
-    'logout': logout
+    'logout': logout,
+    'get_last_id':get_last_id
 }
 
 
