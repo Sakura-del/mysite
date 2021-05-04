@@ -21,11 +21,22 @@ def list_users(request):
     return JsonResponse({'ret':0,'retlist':qs,'msg':''})
 
 
-# 查询用户
+# 按用户名查询用户
 def query_user_by_name(request):
     userName = request['user_name']
     try:
         user =  UserInfo.objects.values().filter(userName=userName)
+    except UserInfo.DoesNotExist:
+        return JsonResponse({'ret':1,'msg':'用户名不存在，请重新输入！'})
+
+    return JsonResponse({'ret': 0, 'user': serializers.serialize("json", [user])[1:-1], 'msg': ''})
+
+
+# 按ID查询用户
+def query_user_by_id(request):
+    userId = request['id']
+    try:
+        user =  UserInfo.objects.values().filter(userId=userId)
     except UserInfo.DoesNotExist:
         return JsonResponse({'ret':1,'msg':'用户名不存在，请重新输入！'})
 
@@ -59,6 +70,11 @@ def delete_user(request):
 
 # 函数字典
 ActionHandler = {
+    'list_users':list_users,
+    'query_user_by_name':'query_user_by_name',
+    'query_user_by_id': 'query_user_by_id',
+    'change_info': 'change_info',
+    'delete_user':'delete_user'
 }
 
 
