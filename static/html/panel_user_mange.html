@@ -428,7 +428,6 @@
             data: { 'action': 'list_users' },
             success: function (result) {
                 var user_info_table_tbody = document.getElementById('user_info_table').children[1]
-
                 for (var i = 0; i < result['retlist'].length; i++) {
                     var user_info = result['retlist'][i]
 
@@ -446,9 +445,6 @@
 
                     var birth_date_td = document.createElement('td')
                     birth_date_td.innerHTML = user_info['birth']
-
-                    // var password_td = document.createElement('td')
-                    // password_td.innerHTML =' user_info[password]'
 
                     var edit_button = document.createElement('button')
                     edit_button.innerHTML = '编辑'
@@ -621,16 +617,6 @@
                 alert('请指定出生日期')
                 return
             }
-
-            // var password = editing_row.children[5].children[0].value
-            // if (password.length == 0) {
-            //     alert('请设置密码')
-            //     return
-            // }
-            // if (! /^.{6,100}$/.test(password)) {
-            //     alert('密码不少于6位')
-            //     return
-            // }
 
             $.ajax({
                 url: "/mgr/views",

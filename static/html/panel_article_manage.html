@@ -357,15 +357,11 @@
                     article_info_table_tbody.appendChild(one_row_tr)
                 }
 
-
                 var chart_div = document.createElement('div')
                 document.getElementById('chart_container').appendChild(chart_div)
                 chart_div.style.width = '100%'
                 chart_div.style.height = '100%'
                 var chart = echarts.init(chart_div)
-
-                var xAxis_content = ['张三', '张三', '张三', '张三']
-                var data1 = [114514, 114514, 114514, 114514]
 
                 var option = {
                     tooltip: {
