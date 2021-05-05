@@ -346,7 +346,7 @@
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                         <div class="menu_section">
                             <ul class="nav side-menu">
-                                <li><a><span class="tag_1st">登录与注册</span>
+                                <li><a><span class="tag_1st">登录注册</span>
                                         <span class="down_arrow fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="index.html">登录</a></li>
@@ -479,7 +479,7 @@
 
                             <div class="x_content">
                                 <div class='row' id='search_container'>
-                                    <button id='search_button'>搜索</button>
+                                    <button id='search_button' onclick='On_search_button_click()'>搜索</button>
                                     <input id='search_name_input' type='text' placeholder='请输入标题搜索文章'>
                                     <div class="clearfix"></div>
                                 </div>
@@ -658,7 +658,6 @@
                 "id": check_id,
             },
             success: function (result) {
-                console.log(result)
                 var article_table_tbody = document.getElementById('article_table').children[1]
 
                 for (var i = 0; i < result['retlist'].length; i++) {
@@ -766,6 +765,64 @@
                 }
             })
         }
+    }
+
+    function On_search_button_click(){
+        var article_title = document.getElementById('search_name_input').value
+
+        $.ajax({
+            url: "/mgr/articles",
+            type: "get",
+            data: {
+                "action":'query_article',
+                "title": article_title,
+                "pagenum": 1,
+                "pagesize": 100
+            },
+            success: function (result) {
+                var article_table_tbody = document.getElementById('article_table').children[1]
+                article_table_tbody.innerHTML = ''
+
+                for (var i = 0; i < result['retlist'].length; i++) {
+                    var article_info = result['retlist'][i]
+
+                    var article_id_td = document.createElement('td')
+                    article_id_td.innerHTML = article_info['articleId']
+
+                    var article_title_td = document.createElement('td')
+                    article_title_td.innerHTML = article_info['articleTitle']
+
+                    var article_content_td = document.createElement('td')
+                    article_content_td.innerHTML = article_info['articleContent']
+
+                    var edit_button = document.createElement('button')
+                    edit_button.innerHTML = '编辑'
+                    edit_button.className = 'edit_button'
+                    edit_button.id = article_info['articleId'] + '_edit_button'
+                    edit_button.value = article_info['articleId']
+                    edit_button.onclick = function () { On_edit_button_click(this.value) }
+
+                    var delete_button = document.createElement('button')
+                    delete_button.innerHTML = '删除'
+                    delete_button.className = 'delete_button'
+                    delete_button.id = article_info['articleId'] + '_delete_button'
+                    delete_button.value = article_info['articleId']
+                    delete_button.onclick = function () { On_delete_button_click(this.value) }
+
+                    var button_td = document.createElement('td')
+                    button_td.appendChild(edit_button)
+                    button_td.appendChild(delete_button)
+
+                    var one_row_tr = document.createElement('tr')
+                    one_row_tr.appendChild(article_id_td)
+                    one_row_tr.appendChild(article_title_td)
+                    one_row_tr.appendChild(article_content_td)
+                    one_row_tr.appendChild(button_td)
+
+                    article_table_tbody.appendChild(one_row_tr)
+                }
+            }
+        })
     }
 
     function On_delete_button_click(article_id) {
